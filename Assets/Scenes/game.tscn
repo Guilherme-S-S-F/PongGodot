@@ -84,4 +84,12 @@ disable_mode = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ball/Area2D"]
 shape = SubResource("CircleShape2D_a8e28")
 
+[node name="pauseAdvice" type="Label" parent="."]
+offset_left = -99.0
+offset_top = -90.0
+offset_right = 99.0
+offset_bottom = -64.0
+text = "TOUCH SCREEN TO START
+"
+
 [connection signal="area_entered" from="Ball/Area2D" to="." method="_on_area_2d_area_entered"]
