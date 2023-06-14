@@ -1,0 +1,87 @@
+[gd_scene load_steps=9 format=3 uid="uid://dpc81sold3h"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/game.gd" id="1_efgt6"]
+[ext_resource type="Texture2D" uid="uid://d1elfc3rcdd77" path="res://Assets/Resources/Images/quadrado.png" id="1_npx1k"]
+[ext_resource type="Texture2D" uid="uid://yvcs2tjd3nv0" path="res://Assets/Resources/Images/circulo.png" id="2_el6gb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vosbb"]
+size = Vector2(32.3889, 1.18519)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g88m6"]
+size = Vector2(0.749999, 34.0741)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xk5ya"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_httyi"]
+size = Vector2(32, 32)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_a8e28"]
+radius = 100.0
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_efgt6")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Background" type="Sprite2D" parent="."]
+modulate = Color(0.0901961, 0.0901961, 0.0901961, 1)
+position = Vector2(5.60284e-06, -1.2815e-05)
+scale = Vector2(36, 20.25)
+texture = ExtResource("1_npx1k")
+
+[node name="TopWall" type="Area2D" parent="Background" groups=["BounceWall"]]
+position = Vector2(0, -16.6)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Background/TopWall"]
+position = Vector2(0.028, 0)
+shape = SubResource("RectangleShape2D_vosbb")
+
+[node name="BottomWall" type="Area2D" parent="Background" groups=["BounceWall"]]
+position = Vector2(0, 16.114)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Background/BottomWall"]
+position = Vector2(0.028, 0)
+shape = SubResource("RectangleShape2D_vosbb")
+
+[node name="PlayerWall" type="Area2D" parent="Background" groups=["playerWall"]]
+position = Vector2(-16.6, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Background/PlayerWall"]
+shape = SubResource("RectangleShape2D_g88m6")
+
+[node name="AiWall" type="Area2D" parent="Background" groups=["aiWall"]]
+position = Vector2(16.6, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Background/AiWall"]
+shape = SubResource("RectangleShape2D_g88m6")
+
+[node name="Paddle Player" type="Sprite2D" parent="."]
+texture = ExtResource("1_npx1k")
+
+[node name="Area2D" type="Area2D" parent="Paddle Player"]
+disable_mode = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Paddle Player/Area2D"]
+shape = SubResource("RectangleShape2D_xk5ya")
+
+[node name="Paddle AI" type="Sprite2D" parent="."]
+texture = ExtResource("1_npx1k")
+
+[node name="Area2D" type="Area2D" parent="Paddle AI"]
+disable_mode = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Paddle AI/Area2D"]
+shape = SubResource("RectangleShape2D_httyi")
+
+[node name="Ball" type="Sprite2D" parent="."]
+position = Vector2(181, 4)
+texture = ExtResource("2_el6gb")
+
+[node name="Area2D" type="Area2D" parent="Ball"]
+disable_mode = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball/Area2D"]
+shape = SubResource("CircleShape2D_a8e28")
+
+[connection signal="area_entered" from="Ball/Area2D" to="." method="_on_area_2d_area_entered"]

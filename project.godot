@@ -11,9 +11,11 @@ config_version=5
 [application]
 
 config/name="Pong"
+run/main_scene="res://Assets/Scenes/game.tscn"
 config/features=PackedStringArray("4.0", "Mobile")
 config/icon="res://icon.svg"
 
 [rendering]
 
 renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true
