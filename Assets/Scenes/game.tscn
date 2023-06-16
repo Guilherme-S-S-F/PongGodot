@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dpc81sold3h"]
+[gd_scene load_steps=8 format=3 uid="uid://dpc81sold3h"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/game.gd" id="1_efgt6"]
 [ext_resource type="Texture2D" uid="uid://d1elfc3rcdd77" path="res://Assets/Resources/Images/quadrado.png" id="1_npx1k"]
@@ -6,9 +6,6 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vosbb"]
 size = Vector2(32.3889, 1.18519)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_g88m6"]
-size = Vector2(0.749999, 34.0741)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xk5ya"]
 size = Vector2(32, 32)
@@ -44,18 +41,6 @@ position = Vector2(0, 16.114)
 position = Vector2(0.028, 0)
 shape = SubResource("RectangleShape2D_vosbb")
 
-[node name="PlayerWall" type="Area2D" parent="Background" groups=["playerWall"]]
-position = Vector2(-16.6, 0)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Background/PlayerWall"]
-shape = SubResource("RectangleShape2D_g88m6")
-
-[node name="AiWall" type="Area2D" parent="Background" groups=["aiWall"]]
-position = Vector2(16.6, 0)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Background/AiWall"]
-shape = SubResource("RectangleShape2D_g88m6")
-
 [node name="Paddle Player" type="Sprite2D" parent="."]
 texture = ExtResource("1_npx1k")
 
@@ -74,7 +59,7 @@ disable_mode = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Paddle AI/Area2D"]
 shape = SubResource("RectangleShape2D_httyi")
 
-[node name="Ball" type="Sprite2D" parent="."]
+[node name="Ball" type="Sprite2D" parent="." groups=["ball"]]
 position = Vector2(181, 4)
 texture = ExtResource("2_el6gb")
 
@@ -91,5 +76,14 @@ offset_right = 99.0
 offset_bottom = -64.0
 text = "TOUCH SCREEN TO START
 "
+
+[node name="Score" type="Label" parent="."]
+offset_left = -30.0
+offset_top = -300.0
+offset_right = 30.0
+offset_bottom = -255.0
+theme_override_font_sizes/font_size = 30
+text = "0 - 0"
+horizontal_alignment = 1
 
 [connection signal="area_entered" from="Ball/Area2D" to="." method="_on_area_2d_area_entered"]

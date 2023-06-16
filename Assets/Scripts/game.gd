@@ -26,6 +26,9 @@ var is_dragging = false
 var touchplace = 0
 var touch = false
 
+var go_up_player = false
+var go_down_player = false
+
 var vel = Vector2.ZERO
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -58,6 +61,32 @@ func _input(event):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	
+	if is_dragging:
+		
+		if touchplace.y < 300:
+			go_up_player = true
+			go_down_player = false
+		else:
+			go_up_player = false
+			go_down_player = true
+	else:
+		go_up_player = false
+		go_down_player = false
+	
+	if ball.position.x < -600:
+		score_ai+=1
+		changeScore()
+		restart = true
+		pause = true
+	
+	if ball.position.x > 600:
+		score_player+=1
+		changeScore()
+		restart = true
+		pause = true
+		
+	
 	if !restart:
 		moveBall()
 		playerMove()
@@ -66,8 +95,11 @@ func _process(delta):
 			pauseText.hide()
 			startRound()
 		else:
+			ball.position = Vector2.ZERO
 			pauseText.show()
 
+func changeScore():
+	$Score.text = str(score_player ," - ", score_ai)
 func startRound():
 	restart = false
 	vel = Vector2(randi_range(-1,1),randi_range(-1,1)).normalized()
@@ -79,8 +111,10 @@ func changeBallDir():
 	vel.y = -vel.y
 
 func playerMove():
-	if is_dragging:
-		player.position.y = touchplace.y
+	if go_down_player && player.position.y < 250:
+		player.position.y += 4	
+	if go_up_player && player.position.y > -250:
+		player.position.y -= 4
 
 func moveBall():
 	ball.position.x += vel.x * 4
@@ -90,13 +124,6 @@ func moveBall():
 func _on_area_2d_area_entered(area):
 	if area.is_in_group("BounceWall"):
 		vel.y = -vel.y
-	elif area.is_in_group("playerWall"):
-		score_ai += 1
-		restart = true
-		startRound()
-	elif area.is_in_group("aiWall"):
-		score_player += 1
-		restart = true
 	else:
 		changeBallDir()
 	
